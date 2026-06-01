@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honest Info & Support | Drug Awareness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0c0c0e;
+            --card-bg: #16161a;
+            --border-color: #242429;
+            --text-light: #f5f5f7;
+            --text-gray: #9a9a12;
+            --text-dim: #86868b;
+            --red-alert: #ff453a;
+            --green-safe: #30d158;
+            --accent-blue: #0071e3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            height: 70px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            background: rgba(12, 12, 14, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+
+        .nav-links { display: flex; gap: 24px; }
+        .nav-link { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+        .nav-link:hover { color: var(--text-light); }
+
+        .emergency-btn {
+            background: rgba(255, 69, 58, 0.1);
+            border: 1px solid var(--red-alert);
+            color: var(--red-alert);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .emergency-btn:hover {
+            background: var(--red-alert);
+            color: #000;
+        }
+
+        /* MAIN CONTENT */
+        main { max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem; }
+
+        .hero { text-align: center; margin-bottom: 4rem; }
+        .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 550px; margin: 0 auto; }
+
+        /* GRID PACKS */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .box h2 { font-size: 1.25rem; margin-bottom: 10px; font-weight: 600; }
+        .box p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 20px; }
+
+        /* SUBSTANCE BUTTONS */
+        .substance-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .substance-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .substance-card:hover, .substance-card.active { background: rgba(255,255,255,0.05); border-color: #666; }
+
+        /* RESEARCH DISPLAY PANEL */
+        .display-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.01);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .display-panel h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-light); }
+
+        /* QUIZ RENDERING */
+        .quiz-container { margin-bottom: 20px; }
+        .quiz-item { margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+        .quiz-item p { margin-bottom: 8px; color: var(--text-light); }
+        .quiz-options { display: flex; gap: 15px; }
+        .radio-label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; color: var(--text-dim); }
+        .radio-label input:checked + span { color: var(--text-light); font-weight: 500; }
+
+        .action-btn {
+            background: var(--text-light);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn:hover { filter: brightness(0.9); }
+
+        .privacy-note {
+            font-size: 0.8rem;
+            color: var(--green-safe);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        /* MAP ELEMENTS */
+        #map-container {
+            height: 280px;
+            width: 100%;
+            border-radius: 12px;
+            background: #111;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* EMERGENCY OVERLAY */
+        #emergency-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .overlay-content { max-width: 600px; width: 100%; text-align: center; }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-heart" style="color: var(--red-alert);"></i>
+            <span>Honest Support</span>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link" href="#substances-section">Learn About Drugs</a>
+            <a class="nav-link" href="#quiz-section">Private Quiz</a>
+            <a class="nav-link" href="#map-section">Find Local Help</a>
+        </div>
+        <button class="emergency-btn" onclick="toggleEmergency(true)"><i class="fa-solid fa-phone"></i> Emergency Help</button>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Honest Information. No Judgment.</h1>
+            <p>Get straight answers about different substances, check your own habits privately, or find people who can help.</p>
+        </section>
+
+        <div class="grid-layout">
+            <div class="box" id="substances-section">
+                <h2>Learn About Different Substances</h2>
+                <p>Click on any category below to reveal clinical realities, neurological mechanisms, and safety risks associated with use.</p>
+                
+                <div class="substance-list">
+                    <div class="substance-card" onclick="showSubstanceInfo('stimulants', this)">Uppers (Stimulants)</div>
+                    <div class="substance-card" onclick="showSubstanceInfo('depressants', this)">Downers (Depressants)</div>
+                    <div class="substance-card" onclick="showSubstanceInfo('prescription', this)">Prescription Pills</div>
+                </div>
+
+                <div id="substance-display" class="display-panel" style="display: none;">
+                    <h3 id="info-title"></h3>
+                    <p id="info-desc" style="font-size: 0.95rem; margin-bottom: 10px; color: var(--text-light);"></p>
+                    <p style="font-size: 0.9rem; margin-bottom: 6px;"><strong>Mechanism:</strong> <span id="info-mechanism" style="color: var(--text-dim);"></span></p>
+                    <p style="font-size: 0.9rem;"><strong>Health Risks:</strong> <span id="info-risks" style="color: var(--text-dim);"></span></p>
+                </div>
+            </div>
+
+            <div class="box" id="quiz-section" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h2>Check Your Habits</h2>
+                    <p>Answer these objective tracking questions based on the DAST screening tools to map your risk profiles.</p>
+                    
+                    <div class="quiz-container" id="quiz-questions-target">
+                        </div>
+
+                    <div id="quiz-results-display" class="display-panel" style="display: none; border-color: var(--green-safe);">
+                        <h3 id="results-score"></h3>
+                        <p id="results-text" style="font-size: 0.9rem; margin: 0; color: #ddd;"></p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <p class="privacy-note"><i class="fa-solid fa-lock"></i> This quiz logic runs entirely in your browser. Absolutely zero logs are kept.</p>
+                    <button class="action-btn" id="quiz-btn" onclick="evaluateQuizAnswers()">Evaluate My Answers <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-layout" style="grid-template-columns: 1fr 1fr;" id="map-section">
+            <div class="box" style="border-color: rgba(48, 209, 88, 0.2);">
+                <h2>Find Support Near You</h2>
+                <p>Grant temporary browser location access to dynamically look up addiction recovery clinics, counselors, and community crisis assets within a 10km radius.</p>
+                <button class="action-btn" style="background: none; border: 1px solid #444; color: white;" onclick="triggerLocationDiscovery()">Search Your Area</button>
+                
+                <div id="map-container">
+                    <div id="map-fallback-msg" style="color: var(--text-dim); text-align: center; padding-top: 120px; font-size: 0.9rem;">Map offline. Click search to initialize.</div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h2>Talk to Someone Right Now</h2>
+                <p>If you just need to talk to a professional who understands, free and private helplines are available 24/7. You don't even have to give your real name.</p>
+                <p style="font-weight: 600; color: white; font-size: 1.1rem;"><i class="fa-solid fa-phone"></i> National Helpline: 1800-11-0031</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="emergency-overlay">
+        <button class="close-btn" onclick="toggleEmergency(false)"><i class="fa-solid fa-xmark"></i> Close</button>
+        <div class="overlay-content">
+            <h2 style="font-size: 2.5rem; color: var(--red-alert); margin-bottom: 1rem;"><i class="fa-solid fa-triangle-exclamation"></i> Medical Emergency</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2.5rem;">If someone has passed out, is struggling to breathe, or won't wake up, act immediately.</p>
+            
+            <div style="background: #111; border: 1px solid #333; padding: 30px; border-radius: 12px; text-align: left;">
+                <p style="font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 10px;">Step 1: Call 112 (or local emergency lines)</p>
+                <p style="color: var(--text-dim); margin-bottom: 20px;">Tell the operator exactly where you are and that you suspect a drug overdose. You will not get in trouble for seeking medical help.</p>
+                
+                <p style="font-size: 1.3rem; font-weight: 600; color: white; margin-bottom: 5px;">Step 2: Check for Breathing</p>
+                <p style="color: var(--text-dim);">Roll the person onto their side (the recovery position) so they don't choke while waiting for help to arrive.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBymkZKpcS-LG572ICod5NA166I27v0sPA&libraries=places"></script>
+
+    <script>
+        // ==========================================
+        // BACKEND DATABASE: EMBEDDED RESEARCH DATA
+        // ==========================================
+        const substanceDatabase = {
+            stimulants: {
+                title: "Uppers (Stimulants)",
+                description: "Includes Amphetamines, Cocaine, Methamphetamine, and prescription stimulants like Methylphenidate (Ritalin/Adderall).",
+                mechanism: "Forces a massive accumulation of dopamine, serotonin, and norepinephrine in synaptic clefts, hyper-activating central nervous system communication pathways.",
+                risks: "Severe acute panic, paranoid psychosis, structural damage to cardiac muscle tissue cells, hypertension crises, lethal cardiovascular arrythmias, and intense psychological dependence crash cycles."
+            },
+            depressants: {
+                title: "Downers (Depressants)",
+                description: "Includes Benzodiazepines (Xanax, Valium), Barbiturates, Alcohol, and surgical sedatives.",
+                mechanism: "Allosteric modulation of GABA-A neural target receptors, turning down global neurochemical firing rates across muscle and metabolic control nodes.",
+                risks: "Severe coordination loss, dangerous respiratory depression (breathing suppression leading to brain damage), coma, and mortality. Physical withdrawal is highly dangerous and requires medical detox."
+            },
+            prescription: {
+                title: "Prescription Pills (Opioids & Synthetic Pain Relievers)",
+                description: "Includes Oxycodone, Hydrocodone, Codeine, Morphine, and synthetic Analgesics like Fentanyl configurations.",
+                mechanism: "Binds tightly to Mu-Opioid receptors embedded along the pain management network, triggering artificial euphoria overrides while lowering metabolic autonomic signals.",
+                risks: "High rates of rapid physical chemical adaptation (tolerance). Misuse risks systemic organ shutdown, immediate lethal hypoxia anomalies from accidental minor variations in dosing, and intense addiction patterns."
+            }
+        };
+
+        const quizQuestions = [
+            { id: 1, text: "Have you used drugs other than those required for medical reasons?", reverse: false },
+            { id: 2, text: "Do you abuse more than one drug at a time?", reverse: false },
+            { id: 3, text: "Are you always able to stop using drugs when you want to?", reverse: true },
+            { id: 4, text: "Has substance use ever created problems or arguments with family members?", reverse: false },
+            { id: 5, text: "Have you neglected your responsibilities or commitments because of drug use?", reverse: false },
+            { id: 6, text: "Have you ever experienced physical withdrawal symptoms when stopping use?", reverse: false }
+        ];
+
+        // Global instances for maps
+        let map, placesService, infoWindow;
+
+        // Overlay handler
+        function toggleEmergency(show) {
+            document.getElementById('emergency-overlay').style.display = show ? 'flex' : 'none';
+        }
+
+        // ==========================================
+        // BACKEND LOGIC: SUBSTANCE CONTROLLER
+        // ==========================================
+        function showSubstanceInfo(key, element) {
+            document.querySelectorAll('.substance-card').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+
+            const item = substanceDatabase[key];
+            if(item) {
+                document.getElementById('info-title').innerText = item.title;
+                document.getElementById('info-desc').innerText = item.description;
+                document.getElementById('info-mechanism').innerText = item.mechanism;
+                document.getElementById('info-risks').innerText = item.risks;
+                document.getElementById('substance-display').style.display = 'block';
+            }
+        }
+
+        // ==========================================
+        // BACKEND LOGIC: QUIZ CONTROLLER
+        // ==========================================
+        function initializeQuizInterface() {
+            const target = document.getElementById('quiz-questions-target');
+            target.innerHTML = '';
+            
+            quizQuestions.forEach(q => {
+                const elementBlock = `
+                    <div class="quiz-item" data-id="${q.id}">
+                        <p style="font-size:0.95rem;">${q.text}</p>
+                        <div class="quiz-options">
+                            <label class="radio-label"><input type="radio" name="q-${q.id}" value="yes"> <span>Yes</span></label>
+                            <label class="radio-label"><input type="radio" name="q-${q.id}" value="no" checked> <span>No</span></label>
+                        </div>
+                    </div>
+                `;
+                target.insertAdjacentHTML('beforeend', elementBlock);
+            });
+        }
+
+        function evaluateQuizAnswers() {
+            let riskPoints = 0;
+            
+            quizQuestions.forEach(q => {
+                const selectedRadio = document.querySelector(`input[name="q-${q.id}"]:checked`);
+                if(selectedRadio) {
+                    const value = selectedRadio.value;
+                    if(q.reverse) {
+                        if(value === 'no') riskPoints++;
+                    } else {
+                        if(value === 'yes') riskPoints++;
+                    }
+                }
+            });
+
+            let assessmentFeedback = "";
+            if (riskPoints === 0) {
+                assessmentFeedback = "No significant risk traits identified based on these vectors. Continue to prioritize healthy behaviors and clear boundaries.";
+            } else if (riskPoints <= 2) {
+                assessmentFeedback = "Low Risk Profile. Minor indicators of problematic patterns detected. Reflecting early on use limits can avoid standard habit progression routes.";
+            } else if (riskPoints <= 4) {
+                assessmentFeedback = "Moderate Risk Profile. Your habits are indicating measurable negative cross-reactions with routine daily functions. Reaching out to a counselor can provide tailored recovery tools.";
+            } else {
+                assessmentFeedback = "Severe Risk Alert. Strong markers pointing to profound functional dependence profiles. We strongly recommend scheduling a consultation session with a local clinical professional immediately.";
+            }
+
+            document.getElementById('results-score').innerText = `Risk Evaluation Index Score: ${riskPoints} / ${quizQuestions.length}`;
+            document.getElementById('results-text').innerText = assessmentFeedback;
+            document.getElementById('quiz-results-display').style.display = 'block';
+        }
+
+        // ==========================================
+        // NATIVE ENGINE: GEOLOCATION MAP CONTROLLER
+        // ==========================================
+        function triggerLocationDiscovery() {
+            const fallbackElement = document.getElementById('map-fallback-msg');
+            if (fallbackElement) fallbackElement.innerText = "Requesting device coordinates...";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const localPosition = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        generateMapInstance(localPosition);
+                    },
+                    () => {
+                        // Geolocation denied or timed out fallback coordinates (Default: Center of USA)
+                        generateMapInstance({ lat: 37.0902, lng: -95.7129 });
+                    }
+                );
+            } else {
+                alert("Your client machine configuration limits access to Geolocation modules.");
+            }
+        }
+
+        function generateMapInstance(coordinates) {
+            infoWindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(document.getElementById('map-container'), {
+                center: coordinates,
+                zoom: 12,
+                styles: [
+                    { elementType: 'geometry', stylers: [{ color: '#16161a' }] },
+                    { elementType: 'labels.text.stroke', stylers: [{ color: '#0c0c0e' }] },
+                    { elementType: 'labels.text.fill', stylers: [{ color: '#86868b' }] },
+                    { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#242429' }] }
+                ]
+            });
+
+            // Anchor center locator marker
+            new google.maps.Marker({
+                position: coordinates,
+                map: map,
+                title: "Your Location Base",
+                icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            });
+
+            const queryRequest = {
+                location: coordinates,
+                radius: '10000', // 10 Kilometer radius scan
+                keyword: 'substance abuse counseling support clinic rehabilitation'
+            };
+
+            placesService = new google.maps.places.PlacesService(map);
+            placesService.nearbySearch(queryRequest, (resultsList, searchStatus) => {
+                if (searchStatus === google.maps.places.PlacesServiceStatus.OK && resultsList) {
+                    for (let index = 0; index < resultsList.length; index++) {
+                        appendSupportMarker(resultsList[index]);
+                    }
+                }
+            });
+        }
+
+        function appendSupportMarker(locationEntity) {
+            if (!locationEntity.geometry || !locationEntity.geometry.location) return;
+
+            const clinicalMarker = new google.maps.Marker({
+                map: map,
+                position: locationEntity.geometry.location,
+                title: locationEntity.name
+            });
+
+            google.maps.event.addListener(clinicalMarker, 'click', () => {
+                infoWindow.setContent(`
+                    <div style="color: #000; font-family: sans-serif; padding: 5px; max-width: 200px;">
+                        <strong style="display: block; margin-bottom: 4px; font-size: 0.9rem;">${locationEntity.name}</strong>
+                        <span style="font-size: 0.8rem; color: #555;">${locationEntity.vicinity || 'Local Consultation Asset'}</span>
+                    </div>
+                `);
+                infoWindow.open(map, clinicalMarker);
+            });
+        }
+
+        // Initialize quiz components upon asset load
+        window.onload = () => {
+            initializeQuizInterface();
+        };
+    </script>
+</body>
+</html>
